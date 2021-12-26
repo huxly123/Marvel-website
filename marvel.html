@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marvel</title>
+    <link rel="stylesheet" href="marvel.css" />
+  </head>
+  <body>
+    <div>
+      <div class="search_div">
+        <input
+          class="search_input"
+          id="inppp"
+          type="text"
+          placeholder="Enter Marvel character"
+        />
+        <img class="search_img" src="./Search.svg" alt="" />
+      </div>
+      <div class="content_div"></div>
+    </div>
+  </body>
+</html>
+<script>
+  var timerId;
+  var div = document.getElementsByClassName("content_div");
+
+   async function search (namee)  {
+    let res = await fetch(
+      `http://gateway.marvel.com/v1/public/characters?ts=1&apikey=6ba99928de47de77f4a65ff5fb4c2f2f&hash=c89ab7d7f03b931523c99c5b4720a39d&name=${namee}`
+    );
+    let { data } = await res.json();
+    // console.log(data.results);
+  
+ var response=data.results.map(({name,thumbnail,description}) => {
+console.log(name, description,thumbnail.path ,thumbnail.extension)
+ })
+  };
+  search("hulk")
+
+  function append(m) {
+    div.innerHTML = null;
+    m.forEach(({ name }) => {
+      let namep = document.createElement("p");
+
+      var obj = {
+        name: name,
+        image:`${thumbnail.path}.${thumbnail.extension}`
+      
+      };
+      obj = JSON.stringify(obj);
+      localStorage.setItem("starwar", obj);
+
+      namep.innerHTML = `Name:${name}`;
+
+      div.append(namep);
+    });
+  }
+
+async function main(){
+    let inp_name=document.getElementById("inppp").value;
+    let result=await search(inp_name)
+    if(inp_name.length>0){
+        append(result)
+    }
+}
+// main()
+
+</script>

@@ -11,6 +11,7 @@
     <div>
       <div class="search_div">
         <input
+        oninput="debounce(main,500)"
           class="search_input"
           id="inppp"
           type="text"
@@ -30,41 +31,55 @@
     let res = await fetch(
       `http://gateway.marvel.com/v1/public/characters?ts=1&apikey=6ba99928de47de77f4a65ff5fb4c2f2f&hash=c89ab7d7f03b931523c99c5b4720a39d&name=${namee}`
     );
-    let { data } = await res.json();
-    // console.log(data.results);
+    let  data  = await res.json();
+   
   
- var response=data.results.map(({name,thumbnail,description}) => {
-console.log(name, description,thumbnail.path ,thumbnail.extension)
- })
+//  var response=data.results.map(({name,thumbnail,description}) => {
+// console.log(name, description,thumbnail.path ,thumbnail.extension)
+//  })
+// console.log(data.data.results);
+return data.data.results
   };
-  search("hulk")
-
-  function append(m) {
-    div.innerHTML = null;
-    m.forEach(({ name }) => {
-      let namep = document.createElement("p");
-
-      var obj = {
-        name: name,
-        image:`${thumbnail.path}.${thumbnail.extension}`
-      
-      };
-      obj = JSON.stringify(obj);
-      localStorage.setItem("starwar", obj);
-
-      namep.innerHTML = `Name:${name}`;
-
-      div.append(namep);
-    });
-  }
+  // search("hulk")
 
 async function main(){
-    let inp_name=document.getElementById("inppp").value;
-    let result=await search(inp_name)
-    if(inp_name.length>0){
-        append(result)
-    }
+  let inp_val=document.getElementById("inppp").value;
+  let result= await search(inp_val);
+  // console.log("reees",result);
+  if(result!=null){
+    append(result)
+  }
 }
-// main()
+
+function append(m){
+   let maindiv = document.getElementsByClassName("content_div");
+  m.map((e)=>{
+    console.log(e.name,e.description);
+   let innerdiv=document.createElement("div")
+let p_name=document.createElement("p");
+let p_description=document.createElement("p");
+p_name.innerHTML=e.name;
+p_description.innerHTML=e.description
+innerdiv.append(p_name,p_description)
+maindiv.append(innerdiv)
+  })
+}
+
+function debounce(fun,delay){
+  let inp_val=document.getElementById("inppp").value;
+
+ if(inp_val.length>=0){
+        if(timerId){
+            clearTimeout(timerId)
+        }
+        timerId=setTimeout(()=>{
+            fun()
+        },delay)
+    }
+
+
+
+
+}
 
 </script>

@@ -19,14 +19,15 @@
         />
         <img class="search_img" src="./Search.svg" alt="" />
       </div>
-      <div class="content_div"></div>
+      <div id="con" class="content_div"></div>
     </div>
   </body>
 </html>
 <script>
   var timerId;
   var div = document.getElementsByClassName("content_div");
-
+//https://swapi.dev/api/people/?search=${namee}
+//http://gateway.marvel.com/v1/public/characters?ts=1&apikey=6ba99928de47de77f4a65ff5fb4c2f2f&hash=c89ab7d7f03b931523c99c5b4720a39d&name=${namee}
    async function search (namee)  {
     let res = await fetch(
       `http://gateway.marvel.com/v1/public/characters?ts=1&apikey=6ba99928de47de77f4a65ff5fb4c2f2f&hash=c89ab7d7f03b931523c99c5b4720a39d&name=${namee}`
@@ -52,7 +53,9 @@ async function main(){
 }
 
 function append(m){
-   let maindiv = document.getElementsByClassName("content_div");
+   let maindiv = document.getElementById("con")
+  maindiv.innerHTML=null
+  
   m.map((e)=>{
     console.log(e.name,e.description);
    let innerdiv=document.createElement("div")

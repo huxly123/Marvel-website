@@ -33,7 +33,7 @@ cursor: pointer;
 .content_div{
     border: 1px solid black;
     width: 35%;
-    height: 300px;
+    height: auto;
   margin:0px auto 0px auto;
   overflow: auto;
   background-color: white;
